@@ -6,6 +6,32 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
 
+  // add submit event to compose email form submit
+  document.querySelector('form').onsubmit = () => {
+    //get values from form after submitting email
+    const recipients = document.querySelector('#compose-recipients').value;
+    const subject = document.querySelector('#compose-subject').value;
+    const body = document.querySelector('#compose-body').value;
+
+    fetch('/emails', {
+      method: 'POST',
+      body: JSON.stringify({
+          recipients: recipients,
+          subject: subject,
+          body: body
+      })
+    })
+    .then(response => response.json())
+    .then(result => {
+        // Print result
+        console.log(result);
+    });
+    //redirect to sent mailbox after sending email
+    load_mailbox('sent');
+
+    // return false;
+  }
+
   // By default, load the inbox
   load_mailbox('inbox');
 });
@@ -20,6 +46,7 @@ function compose_email() {
   document.querySelector('#compose-recipients').value = '';
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
+
 }
 
 function load_mailbox(mailbox) {
@@ -37,7 +64,6 @@ function load_mailbox(mailbox) {
   .then(emails => {
   // Print emails
   console.log(emails);
-  console.log('this should work now.')
   // ... do something else with emails ...
   });
 }
