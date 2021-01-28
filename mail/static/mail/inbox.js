@@ -87,12 +87,11 @@ function load_mailbox(mailbox) {
         email.classList.add("email-read");
       }
 
-      // i think this will be needed when we want to open an email
+      // add click event handler to div (aka email)
       email.addEventListener('click', function() {
         // run viewEmail function when message clicked
         viewEmail(id);
       });
-      //
       
       // render different values based on the mailbox
       if (mailbox === 'sent') {
@@ -117,10 +116,27 @@ function viewEmail(id) {
     const subject = email['subject'];
     const time = email['timestamp'];
     const body = email['body'];
+    const archived = email['archived'];
 
-    // get div element and populate with values of email
+    // create archive button for email
+    const archiveButton = document.createElement("button");
+    archiveButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
+    if (archived === false) {
+      archiveButton.innerHTML = "Archive";
+    } else {
+      archiveButton.innerHTML = "Unarchive";
+    }
+
+    archiveButton.addEventListener('click', function() {
+      // archive email when button clicked
+      archiveEmail(id, archived);
+    });
+
+    // get div element and populate with buttons and values of email
     const message = document.querySelector('#message-view');
     message.innerHTML = `<p>${sender}</p> <p>${recipients}</p> <p>${subject}</p> <p>${time}<p> <p>${body}</p>`;
+    message.prepend(archiveButton);
+
 
   // Show message view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
@@ -135,4 +151,22 @@ function viewEmail(id) {
   })
 
   });
+}
+
+function archiveEmail (id, archived) {
+  if (archived === false) {
+    fetch(`/emails/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        archived: true
+      })
+    })
+  } else {
+    fetch(`/emails/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        archived: false
+      })
+    })
+  }
 }
