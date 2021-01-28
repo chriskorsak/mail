@@ -38,7 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function compose_email() {
-
+  //clear out messages div if message had been loaded
+  document.querySelector('#message-view').innerHTML = "";
+  
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
@@ -51,7 +53,9 @@ function compose_email() {
 }
 
 function load_mailbox(mailbox) {
-  
+  //clear out messages div if message had been loaded
+  document.querySelector('#message-view').innerHTML = "";
+
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
@@ -85,7 +89,8 @@ function load_mailbox(mailbox) {
 
       // i think this will be needed when we want to open an email
       email.addEventListener('click', function() {
-        console.log('message clicked dude!');
+        // run viewEmail function when message clicked
+        viewEmail(id);
       });
       //
       
@@ -100,4 +105,25 @@ function load_mailbox(mailbox) {
       document.querySelector('#emails-view').append(email);
     }  
   });
+}
+
+function viewEmail(id) {
+  fetch(`/emails/${id}`)
+  .then(response => response.json())
+  .then(email => {
+    // extract values from object in email array (sender, recipients, subject, timestamp, and body.)
+    const sender = email['sender'];
+    const recipients = email['recipients'];
+    const subject = email['subject'];
+    const time = email['timestamp'];
+    const body = email['body'];
+
+    // get element and populate values of email
+    const message = document.querySelector('#message-view');
+    message.innerHTML = `<p>${sender}</p> <p>${recipients}</p> <p>${subject}</p> <p>${time}<p> <p>${body}</p>`;
+
+  // Show message view and hide other views
+  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#message-view').style.display = 'block';
+});
 }
