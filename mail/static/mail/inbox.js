@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function compose_email() {
   //clear out messages div if message had been loaded
   document.querySelector('#message-view').innerHTML = "";
-  
+
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
@@ -118,12 +118,21 @@ function viewEmail(id) {
     const time = email['timestamp'];
     const body = email['body'];
 
-    // get element and populate values of email
+    // get div element and populate with values of email
     const message = document.querySelector('#message-view');
     message.innerHTML = `<p>${sender}</p> <p>${recipients}</p> <p>${subject}</p> <p>${time}<p> <p>${body}</p>`;
 
   // Show message view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#message-view').style.display = 'block';
-});
+
+  //mark the email as read using a put request
+  fetch(`/emails/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      read: true
+    })
+  })
+
+  });
 }
