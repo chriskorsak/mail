@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
 
-  // add submit event to compose email form submit
+  // submit email form start
   document.querySelector('form').onsubmit = () => {
     //get values from form after submitting email
     const recipients = document.querySelector('#compose-recipients').value;
@@ -29,8 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
     //redirect to sent mailbox after sending email
     load_mailbox('sent');
 
-    // return false;
+    return false;
   }
+  //submit email form end
 
   // By default, load the inbox
   load_mailbox('inbox');
@@ -62,8 +63,16 @@ function load_mailbox(mailbox) {
   fetch(`/emails/${mailbox}`)
   .then(response => response.json())
   .then(emails => {
-  // Print emails
-  console.log(emails);
-  // ... do something else with emails ...
+  // 'emails' is an array of objects. each object is an 'email'
+    for (let i = 0; i < emails.length; i++) {
+      // extract values from emails object
+      const sender = emails[i]['sender'];
+      const subject = emails[i]['subject'];
+      const time = emails[i]['timestamp'];
+      
+      const email = document.createElement('div');
+      email.innerHTML = `${sender} ${subject} ${time}`;
+      document.querySelector('#emails-view').append(email);
+    }  
   });
 }
