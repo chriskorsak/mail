@@ -2,7 +2,19 @@ textarea {
     min-height: 400px;
 }
 
-#emails-view div {
+/* email message listed in mailbox */
+.message {
+  display: flex;
+  opacity: 70%;
   padding: 1%;
   border: 1px solid black;
+}
+
+.message:hover {
+  opacity: 100%;
+}
+
+/* sender subject and timestamp of email message inside this element */
+.message  span {
+  flex: 1;
 }

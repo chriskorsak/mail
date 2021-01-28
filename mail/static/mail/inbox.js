@@ -65,13 +65,31 @@ function load_mailbox(mailbox) {
   .then(emails => {
   // 'emails' is an array of objects. each object is an 'email'
     for (let i = 0; i < emails.length; i++) {
-      // extract values from emails object
+      // extract values from object in 'emails' array.
+      const id = emails[i]['id'];
       const sender = emails[i]['sender'];
+      const recipients = emails[i]['recipients'];
       const subject = emails[i]['subject'];
       const time = emails[i]['timestamp'];
-      
+      //'read' val is true or false (has email been read yet?)
+      const read = emails[i]['read'];
+      const archived = emails[i]['archived'];
+
+      // create div element (email message listed in mailboxes)
       const email = document.createElement('div');
-      email.innerHTML = `${sender} ${subject} ${time}`;
+      email.classList.add("message");
+      // i think this will be needed when we want to open an email
+      email.addEventListener('click', function() {
+        console.log('message clicked dude!');
+      });
+      //
+      
+      // render different values based on the mailbox
+      if (mailbox === 'sent') {
+        email.innerHTML = `<span>${recipients}</span> <span>${subject}</span> <span>${time}<span>`;
+      } else {  
+        email.innerHTML = `<span>${sender}</span> <span>${subject}</span> <span>${time}<span>`;
+      }
       document.querySelector('#emails-view').append(email);
     }  
   });
