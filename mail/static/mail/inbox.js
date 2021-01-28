@@ -75,9 +75,9 @@ function load_mailbox(mailbox) {
       const recipients = emails[i]['recipients'];
       const subject = emails[i]['subject'];
       const time = emails[i]['timestamp'];
-      //'read' val is true or false (has email been read yet?)
+      //'read' value is true or false (ex. has email been read yet?)
       const read = emails[i]['read'];
-      const archived = emails[i]['archived'];
+      // const archived = emails[i]['archived'];
 
       // create div element (email message listed in mailboxes)
       const email = document.createElement('div');
@@ -129,7 +129,7 @@ function viewEmail(id) {
 
     archiveButton.addEventListener('click', function() {
       // archive email when button clicked
-      archiveEmail(id, archived);
+      archiveEmail(id, archived, archiveButton);
     });
 
     // get div element and populate with buttons and values of email
@@ -153,7 +153,7 @@ function viewEmail(id) {
   });
 }
 
-function archiveEmail (id, archived) {
+function archiveEmail (id, archived, archiveButton) {
   if (archived === false) {
     fetch(`/emails/${id}`, {
       method: 'PUT',
@@ -161,6 +161,8 @@ function archiveEmail (id, archived) {
         archived: true
       })
     })
+    //update button text here
+    archiveButton.innerHTML = "Unarchive";
   } else {
     fetch(`/emails/${id}`, {
       method: 'PUT',
@@ -168,5 +170,7 @@ function archiveEmail (id, archived) {
         archived: false
       })
     })
+    //update button text here
+    archiveButton.innerHTML = "Archive";
   }
 }
