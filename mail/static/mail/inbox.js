@@ -78,6 +78,11 @@ function load_mailbox(mailbox) {
       // create div element (email message listed in mailboxes)
       const email = document.createElement('div');
       email.classList.add("message");
+      // add class if email has been read or email displayed in sent mailbox
+      if (read || mailbox === 'sent') {
+        email.classList.add("email-read");
+      }
+
       // i think this will be needed when we want to open an email
       email.addEventListener('click', function() {
         console.log('message clicked dude!');
@@ -90,6 +95,8 @@ function load_mailbox(mailbox) {
       } else {  
         email.innerHTML = `<span>${sender}</span> <span>${subject}</span> <span>${time}<span>`;
       }
+
+      // append email
       document.querySelector('#emails-view').append(email);
     }  
   });

@@ -18,3 +18,7 @@ textarea {
 .message  span {
   flex: 1;
 }
+
+.email-read {
+  background-color: rgb(235, 235, 235);
+}
