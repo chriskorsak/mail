@@ -110,7 +110,7 @@ function viewEmail(id) {
   fetch(`/emails/${id}`)
   .then(response => response.json())
   .then(email => {
-    // extract values from object in email array (sender, recipients, subject, timestamp, and body.)
+    // extract values from object in email array
     const sender = email['sender'];
     const recipients = email['recipients'];
     const subject = email['subject'];
@@ -118,7 +118,7 @@ function viewEmail(id) {
     const body = email['body'];
     const archived = email['archived'];
 
-    // create archive button for email
+    // create archive button for email if not in sent mailbox
     const archiveButton = document.createElement("button");
     archiveButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
     if (archived === false) {
@@ -132,11 +132,17 @@ function viewEmail(id) {
       archiveEmail(id, archived);
     });
 
-    // get div element and populate with buttons and values of email
+    // get div element and populate with values of email
     const message = document.querySelector('#message-view');
     message.innerHTML = `<p>${sender}</p> <p>${recipients}</p> <p>${subject}</p> <p>${time}<p> <p>${body}</p>`;
-    message.prepend(archiveButton)
+
+    // display button if not in sent mailbox
+    const userEmail = document.querySelector('h2').innerHTML;
+    if (userEmail != sender) {
+      message.prepend(archiveButton);
+    }
   });
+  
   //mark the email as read using a put request
   fetch(`/emails/${id}`, {
     method: 'PUT',
