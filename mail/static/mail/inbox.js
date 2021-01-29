@@ -25,9 +25,11 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(result => {
         // Print result
         console.log(result);
-    });
+    })
     //redirect to sent mailbox after sending email
-    load_mailbox('sent');
+    .then(function() {
+      load_mailbox('sent')
+    })
 
     return false;
   }
@@ -196,6 +198,6 @@ function replyEmail(email) {
     document.querySelector('#compose-subject').value = `Re: ${email['subject']}`;
   }
   document.querySelector('#compose-body').value = `On ${email['timestamp']}, ${email['sender']} wrote:
-  
+
   ${email['body']}`;
 }
