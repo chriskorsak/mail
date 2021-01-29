@@ -129,19 +129,14 @@ function viewEmail(id) {
 
     archiveButton.addEventListener('click', function() {
       // archive email when button clicked
-      archiveEmail(id, archived, archiveButton);
+      archiveEmail(id, archived);
     });
 
     // get div element and populate with buttons and values of email
     const message = document.querySelector('#message-view');
     message.innerHTML = `<p>${sender}</p> <p>${recipients}</p> <p>${subject}</p> <p>${time}<p> <p>${body}</p>`;
-    message.prepend(archiveButton);
-
-
-  // Show message view and hide other views
-  document.querySelector('#emails-view').style.display = 'none';
-  document.querySelector('#message-view').style.display = 'block';
-
+    message.prepend(archiveButton)
+  });
   //mark the email as read using a put request
   fetch(`/emails/${id}`, {
     method: 'PUT',
@@ -149,11 +144,12 @@ function viewEmail(id) {
       read: true
     })
   })
-
-  });
+  // Show message view and hide other views
+  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#message-view').style.display = 'block';
 }
 
-function archiveEmail (id, archived, archiveButton) {
+function archiveEmail (id, archived) {
   if (archived === false) {
     fetch(`/emails/${id}`, {
       method: 'PUT',
@@ -161,8 +157,9 @@ function archiveEmail (id, archived, archiveButton) {
         archived: true
       })
     })
-    //update button text here
-    archiveButton.innerHTML = "Unarchive";
+    .then(function() {
+      load_mailbox('inbox')
+    })
   } else {
     fetch(`/emails/${id}`, {
       method: 'PUT',
@@ -170,7 +167,8 @@ function archiveEmail (id, archived, archiveButton) {
         archived: false
       })
     })
-    //update button text here
-    archiveButton.innerHTML = "Archive";
+    .then(function() {
+      load_mailbox('inbox')
+    })
   }
 }
