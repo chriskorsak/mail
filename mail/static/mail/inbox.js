@@ -44,12 +44,11 @@ function compose_email() {
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
-
-  // Clear out composition fields
+  
+  // Clear out composition fields if composing from scratch
   document.querySelector('#compose-recipients').value = '';
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
-
 }
 
 function load_mailbox(mailbox) {
@@ -118,18 +117,26 @@ function viewEmail(id) {
     const body = email['body'];
     const archived = email['archived'];
 
-    // create archive button for email if not in sent mailbox
+    // create archive and reply buttons for email if not in sent mailbox
     const archiveButton = document.createElement("button");
+    const replyButton = document.createElement("button");
+    replyButton.innerHTML = "Reply";
     archiveButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
+    replyButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
     if (archived === false) {
       archiveButton.innerHTML = "Archive";
     } else {
       archiveButton.innerHTML = "Unarchive";
     }
-
+    
+    // archive email when button clicked
     archiveButton.addEventListener('click', function() {
-      // archive email when button clicked
       archiveEmail(id, archived);
+    });
+
+    // reply to email when button clicked
+    replyButton.addEventListener('click', function() {
+      replyEmail(email);
     });
 
     // get div element and populate with values of email
@@ -139,10 +146,10 @@ function viewEmail(id) {
     // display button if not in sent mailbox
     const userEmail = document.querySelector('h2').innerHTML;
     if (userEmail != sender) {
-      message.prepend(archiveButton);
+      message.prepend(archiveButton, " ", replyButton);
     }
   });
-  
+
   //mark the email as read using a put request
   fetch(`/emails/${id}`, {
     method: 'PUT',
@@ -177,4 +184,18 @@ function archiveEmail (id, archived) {
       load_mailbox('inbox')
     })
   }
+}
+
+function replyEmail(email) {
+  compose_email();
+  // Populate inputs with email info
+  document.querySelector('#compose-recipients').value = email['sender'];
+  if (email['subject'].startsWith('Re:')) {
+    document.querySelector('#compose-subject').value = email['subject'];
+  } else {
+    document.querySelector('#compose-subject').value = `Re: ${email['subject']}`;
+  }
+  document.querySelector('#compose-body').value = `On ${email['timestamp']}, ${email['sender']} wrote:
+  
+  ${email['body']}`;
 }
