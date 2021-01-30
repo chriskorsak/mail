@@ -143,7 +143,7 @@ function viewEmail(id) {
 
     // get div element and populate with values of email
     const message = document.querySelector('#message-view');
-    message.innerHTML = `<p>${sender}</p> <p>${recipients}</p> <p>${subject}</p> <p>${time}<p> <p>${body}</p>`;
+    message.innerHTML = `<p>${sender}</p> <p>${recipients}</p> <p>${subject}</p> <p>${time}<p> <p id="body">${body}</p>`;
 
     // display button if not in sent mailbox
     const userEmail = document.querySelector('h2').innerHTML;
@@ -192,12 +192,14 @@ function replyEmail(email) {
   compose_email();
   // Populate inputs with email info
   document.querySelector('#compose-recipients').value = email['sender'];
+  // only add re: once in subject line
   if (email['subject'].startsWith('Re:')) {
     document.querySelector('#compose-subject').value = email['subject'];
   } else {
     document.querySelector('#compose-subject').value = `Re: ${email['subject']}`;
   }
+  // add original email(s) to form
   document.querySelector('#compose-body').value = `On ${email['timestamp']}, ${email['sender']} wrote:
-
-  ${email['body']}`;
+${email['body']}
+  `;
 }

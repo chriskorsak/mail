@@ -2,6 +2,12 @@ textarea {
     min-height: 400px;
 }
 
+/* retain white space from textarea aka the email body */
+#body {
+  white-space: pre-wrap;
+}
+
+
 /* email message listed in mailbox */
 .message {
   display: flex;
