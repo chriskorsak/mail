@@ -22,16 +22,16 @@ document.addEventListener('DOMContentLoaded', function() {
       })
     })
     .then(response => response.json())
-    .then(result => {
-        // Print result
-        console.log(result);
-    })
+    // .then(result => {
+    //     // Print result
+    //     console.log(result);
+    // })
     //redirect to sent mailbox after sending email
     .then(function() {
       load_mailbox('sent')
     })
 
-    return false;
+    // return false;
   }
   //submit email form end
 
