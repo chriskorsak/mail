@@ -1,3 +1,27 @@
+/* import google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+/* .container {
+  padding: 1%;
+} */
+
+#nav {
+  position: fixed;
+  z-index: 1;
+  height: 100px;
+  width: 100%;
+  background-color: white;
+  border-bottom: rgb(240, 240, 240) 2px solid;
+}
+
+#main {
+  padding-top: 110px;
+}
+
 textarea {
     min-height: 400px;
 }

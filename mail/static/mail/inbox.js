@@ -123,8 +123,8 @@ function viewEmail(id) {
     const archiveButton = document.createElement("button");
     const replyButton = document.createElement("button");
     replyButton.innerHTML = "Reply";
-    archiveButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
-    replyButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
+    archiveButton.classList.add('btn', 'btn-light', 'btn-sm');
+    replyButton.classList.add('btn', 'btn-light', 'btn-sm');
     if (archived === false) {
       archiveButton.innerHTML = "Archive";
     } else {
