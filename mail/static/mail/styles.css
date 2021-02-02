@@ -1,19 +1,59 @@
+/* import google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
+/* * {
+  border: solid black 1px;
+} */
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.container-fluid {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+#nav {
+  padding: 2%;
+  padding-top: 1%;
+  position: fixed;
+  z-index: 1;
+  min-height: 120px;
+  width: 100%;
+  background-color: white;
+  border-bottom: rgb(240, 240, 240) 2px solid;
+}
+
+#main {
+  padding: 120px 2% 2% 2%;
+}
+
+h2,
+h3 {
+  color: #204953;
+  font-size: 150%;
+}
+
+button {
+  margin: 5px 0px !important;
+}
+
 textarea {
     min-height: 400px;
 }
 
 /* retain white space from textarea aka the email body */
-#body {
+p#body {
   white-space: pre-wrap;
 }
-
 
 /* email message listed in mailbox */
 .message {
   display: flex;
   opacity: 70%;
   padding: 1%;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .message:hover {
@@ -27,4 +67,25 @@ textarea {
 
 .email-read {
   background-color: rgb(240, 240, 240);
+}
+
+span.m {
+  font-weight: bold;
+}
+
+/* for displaying mailbox list on mobile devices */
+@media only screen and (max-width: 575px) {
+  .message {
+    display: block;
+  }
+
+  span {
+    display: inline-block;
+    /* height: 40px; */
+    min-width: 40%;
+  }
+
+  span.m {
+    display: inline;
+  }
 }

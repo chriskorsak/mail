@@ -96,9 +96,9 @@ function load_mailbox(mailbox) {
       
       // render different values based on the mailbox
       if (mailbox === 'sent') {
-        email.innerHTML = `<span>${recipients}</span> <span>${subject}</span> <span>${time}<span>`;
+        email.innerHTML = `<span>${recipients}</span> <span>${subject}</span> <span>${time}</span>`;
       } else {  
-        email.innerHTML = `<span>${sender}</span> <span>${subject}</span> <span>${time}<span>`;
+        email.innerHTML = `<span>${sender}</span> <span>${subject}</span> <span>${time}</span>`;
       }
 
       // append email
@@ -123,8 +123,8 @@ function viewEmail(id) {
     const archiveButton = document.createElement("button");
     const replyButton = document.createElement("button");
     replyButton.innerHTML = "Reply";
-    archiveButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
-    replyButton.classList.add('btn', 'btn-sm', 'btn-outline-primary');
+    archiveButton.classList.add('btn', 'btn-light', 'btn-sm');
+    replyButton.classList.add('btn', 'btn-light', 'btn-sm');
     if (archived === false) {
       archiveButton.innerHTML = "Archive";
     } else {
@@ -143,7 +143,7 @@ function viewEmail(id) {
 
     // get div element and populate with values of email
     const message = document.querySelector('#message-view');
-    message.innerHTML = `<p>${sender}</p> <p>${recipients}</p> <p>${subject}</p> <p>${time}<p> <p id="body">${body}</p>`;
+    message.innerHTML = `<p><span class="m">To:</span> ${sender}</p> <p><span class="m">From:</span> ${recipients}</p> <p><span class="m">Subject:</span> ${subject}</p> <p><span class="m">Time:</span> ${time}<p> <p id="body">${body}</p>`;
 
     // display button if not in sent mailbox
     const userEmail = document.querySelector('h2').innerHTML;
