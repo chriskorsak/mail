@@ -1,10 +1,6 @@
 /* import google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
 
-/* * {
-  border: solid black 1px;
-} */
-
 body {
   font-family: 'Noto Sans', sans-serif;
 }
@@ -48,7 +44,7 @@ p#body {
   white-space: pre-wrap;
 }
 
-/* email message listed in mailbox */
+/* email messages listed in mailboxes (list of messages) */
 .message {
   display: flex;
   opacity: 70%;
@@ -69,8 +65,20 @@ p#body {
   background-color: rgb(240, 240, 240);
 }
 
+/* styling in message (to: from: subject: etc...) */
 span.m {
   font-weight: bold;
+}
+
+a,
+a:hover {
+  color: #306d7c;
+}
+
+/* input box shadow color when input is in focus state */
+.form-control:focus {
+  box-shadow: 0px 0px 3px 3px rgb(230, 230, 230);
+  border: 1px solid #204953;
 }
 
 /* for displaying mailbox list on mobile devices */
