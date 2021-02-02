@@ -19,14 +19,24 @@ body {
   padding-top: 1%;
   position: fixed;
   z-index: 1;
-  height: 110px;
+  min-height: 120px;
   width: 100%;
   background-color: white;
   border-bottom: rgb(240, 240, 240) 2px solid;
 }
 
 #main {
-  padding: 110px 2% 2% 2%;
+  padding: 120px 2% 2% 2%;
+}
+
+h2,
+h3 {
+  color: #204953;
+  font-size: 150%;
+}
+
+button {
+  margin: 5px 0px !important;
 }
 
 textarea {
@@ -34,10 +44,9 @@ textarea {
 }
 
 /* retain white space from textarea aka the email body */
-#body {
+p#body {
   white-space: pre-wrap;
 }
-
 
 /* email message listed in mailbox */
 .message {
