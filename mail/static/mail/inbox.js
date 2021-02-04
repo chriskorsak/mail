@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#compose').addEventListener('click', compose_email);
 
   // submit email form start
-  document.querySelector('form').onsubmit = () => {
+  document.querySelector('form').onsubmit = (event) => {
+    event.preventDefault();
     //get values from form after submitting email
     const recipients = document.querySelector('#compose-recipients').value;
     const subject = document.querySelector('#compose-subject').value;
@@ -22,16 +23,10 @@ document.addEventListener('DOMContentLoaded', function() {
       })
     })
     .then(response => response.json())
-    // .then(result => {
-    //     // Print result
-    //     console.log(result);
-    // })
     //redirect to sent mailbox after sending email
     .then(function() {
       load_mailbox('sent')
     })
-
-    // return false;
   }
   //submit email form end
 
@@ -143,7 +138,7 @@ function viewEmail(id) {
 
     // get div element and populate with values of email
     const message = document.querySelector('#message-view');
-    message.innerHTML = `<p><span class="m">To:</span> ${sender}</p> <p><span class="m">From:</span> ${recipients}</p> <p><span class="m">Subject:</span> ${subject}</p> <p><span class="m">Time:</span> ${time}<p> <p id="body">${body}</p>`;
+    message.innerHTML = `<p><span class="m">To:</span> ${recipients}</p> <p><span class="m">From:</span> ${sender}</p> <p><span class="m">Subject:</span> ${subject}</p> <p><span class="m">Time:</span> ${time}<p> <p id="body">${body}</p>`;
 
     // display button if not in sent mailbox
     const userEmail = document.querySelector('h2').innerHTML;
