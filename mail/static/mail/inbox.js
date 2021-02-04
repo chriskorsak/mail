@@ -5,30 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
-
-  // submit email form start
-  document.querySelector('form').onsubmit = (event) => {
-    event.preventDefault();
-    //get values from form after submitting email
-    const recipients = document.querySelector('#compose-recipients').value;
-    const subject = document.querySelector('#compose-subject').value;
-    const body = document.querySelector('#compose-body').value;
-
-    fetch('/emails', {
-      method: 'POST',
-      body: JSON.stringify({
-          recipients: recipients,
-          subject: subject,
-          body: body
-      })
-    })
-    .then(response => response.json())
-    //redirect to sent mailbox after sending email
-    .then(function() {
-      load_mailbox('sent')
-    })
-  }
-  //submit email form end
+  document.querySelector('#compose-form').addEventListener('submit', submit_email);
 
   // By default, load the inbox
   load_mailbox('inbox');
@@ -46,6 +23,28 @@ function compose_email() {
   document.querySelector('#compose-recipients').value = '';
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
+}
+
+function submit_email (event) {
+  event.preventDefault();
+  //get values from form after submitting email
+  const recipients = document.querySelector('#compose-recipients').value;
+  const subject = document.querySelector('#compose-subject').value;
+  const body = document.querySelector('#compose-body').value;
+
+  fetch('/emails', {
+    method: 'POST',
+    body: JSON.stringify({
+        recipients: recipients,
+        subject: subject,
+        body: body
+    })
+  })
+  .then(response => response.json())
+  //redirect to sent mailbox after sending email
+  .then(function() {
+    load_mailbox('sent')
+  })
 }
 
 function load_mailbox(mailbox) {
